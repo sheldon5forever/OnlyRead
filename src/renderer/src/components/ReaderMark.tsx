@@ -6,7 +6,7 @@ interface Props {
  * 按尺寸选描边粗细：描边图形不能等比缩放。
  * 同一个 24 viewBox 放到 16px 时 1.8 的描边只有 1.2 个物理像素（发灰发虚），
  * 放到 34px 时却有 2.55 个（比 18px 更粗更闷）。
- * 依据：brand/mark-a-check.png 的实测阶梯。
+ * 阈值来自 16 / 18 / 20 / 24 / 34 / 64px 与 stroke 1.8 / 2.0 / 2.4 的逐格实测。
  */
 function strokeFor(size: number): number {
   if (size <= 16) return 2.4

@@ -153,10 +153,10 @@ Apple Developer 证书（`CSC_LINK` / `CSC_KEY_PASSWORD` + notarize）或 Window
 未签名时建议设置 `CSC_IDENTITY_AUTO_DISCOVERY=false`，避免 electron-builder 去本机钥匙串中查找证书。
 
 应用图标已随仓库提供（`build/icon.ico`、`build/icon.icns`、`build/icon.png`），
-源自 `brand/` 下的品牌资产；需要重新生成时执行：
+源自 `brand/` 下的图标资产；需要重新生成时执行：
 
 ```bash
-python brand/make_icon.py     # 重新渲染各尺寸 PNG
+python scripts/make_icon.py   # 重新渲染各尺寸 PNG 到 brand/
 python scripts/make-icon.py   # 装箱到 build/（png + ico + icns）
 ```
 
@@ -195,8 +195,9 @@ src/
         └── styles/       # 设计变量与布局样式
 scripts/
 ├── prepare-assets.mjs    # 复制 pdf.js cMap / 标准字体到渲染层
-└── make-icon.py          # 把 brand/ 的图标装箱到 build/
-brand/                    # 品牌资产：图标源文件、生成脚本、设计说明
+├── make_icon.py          # 生成各尺寸 PNG 图标到 brand/（零依赖）
+└── make-icon.py          # 把 brand/ 的图标装箱到 build/（png + ico + icns）
+brand/                    # 品牌资产：应用图标、favicon、菜单栏模板图、标记草案
 build/                    # 打包资源：应用图标与 macOS entitlements
 ```
 

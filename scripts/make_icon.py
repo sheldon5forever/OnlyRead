@@ -15,20 +15,25 @@
 
 用法
 ----
-    python brand/make-icon.py                 # 主图 brand/icon.png + 7 个尺寸
-    python brand/make-icon.py --size 1024     # 只出单张 brand/icon.png（1024）
-    python brand/make-icon.py --no-main       # 只出 brand/icon-sizes/ 里的尺寸组
+    python scripts/make_icon.py                 # 主图 brand/icon.png + 7 个尺寸
+    python scripts/make_icon.py --size 1024     # 只出单张 brand/icon.png（1024）
+    python scripts/make_icon.py --no-main       # 只出 brand/icon-sizes/ 里的尺寸组
 
-输出
-----
+输出（均为相对仓库根目录的 brand/ 资产目录）
+------------------------------------------
     brand/icon.png                     默认 512x512 主图
     brand/icon-sizes/icon-{16,24,32,48,64,128,256}.png
 
-设计约束（来自 brand/设计建议.md 第 4.2 / 5 节）
-------------------------------------------------
+本脚本只负责生成 PNG 资产；把它们装箱成 build/ 下的 ico / icns 由
+`scripts/make-icon.py` 完成（见该脚本，或 README「打包与分发」一节）。
+
+设计约束
+--------
 * 渐变 #2f7efc -> #1e4fd8（左上到右下），与 --accent 同色相，不引入新色相。
 * 图形纯白 #ffffff，不放任何文字。
 * 圆角半径 = 边长的 22%，图形外边距不小于边长的 12%。
+* 描边空心双栏书按边长分档（≤32px / ≥48px），不做插值——理由见
+  `BOOK_STROKE_SMALL` 上方的注释。
 """
 import argparse
 import math
@@ -141,8 +146,10 @@ BOOK_STROKE_LARGE = {
     'stroke': 0.0932,        # 描边：书宽的 9.32% -> 512px 上 ≈ 35.3px
 }
 HERE = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_MAIN_PATH = os.path.join(HERE, 'icon.png')
-DEFAULT_SIZES_DIR = os.path.join(HERE, 'icon-sizes')
+# 本脚本位于 scripts/，图标资产目录在仓库根目录的 brand/
+BRAND_DIR = os.path.normpath(os.path.join(HERE, os.pardir, 'brand'))
+DEFAULT_MAIN_PATH = os.path.join(BRAND_DIR, 'icon.png')
+DEFAULT_SIZES_DIR = os.path.join(BRAND_DIR, 'icon-sizes')
 
 
 # ---------------------------------------------------------------------------

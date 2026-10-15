@@ -8,17 +8,20 @@
 
 为什么只"装箱"、不缩放
 ----------------------
-应用图标是按尺寸**分档光栅化**的（≤32px 一套比例、≥48px 另一套，理由见
-brand/README.md「尺寸分档规则：为什么不做插值」）。ICO / ICNS 里每个尺寸都必须
-直接取对应的原始产物；若让工具把 512 缩到 16，描边会被抗锯齿抹成一圈灰线，
-小尺寸就退化成一块蓝白斑块。
+应用图标是按尺寸**分档光栅化**的（≤32px 一套比例、≥48px 另一套）。ICO / ICNS 里
+每个尺寸都必须直接取对应的原始产物；若让工具把 512 缩到 16，描边会被抗锯齿抹成
+一圈灰线，小尺寸就退化成一块蓝白斑块。
 
 所以本脚本不重新实现几何，只做容器装配：
   * 16 / 24 / 32 / 48 / 64 / 128 / 256 读 brand/icon-sizes/ 下已有的 PNG；
   * 512 读 brand/icon.png；
-  * 1024（icns 的 ic10 = 512@2x）用 brand/make_icon.py 现渲染，
+  * 1024（icns 的 ic10 = 512@2x）用同目录的 make_icon.py 现渲染，
     保证与其余尺寸同源、同属分档几何。
 只依赖标准库（自己写 ICO / ICNS 容器），运行环境无需 Pillow。
+
+要先重新生成 brand/ 下的 PNG 资产，再运行本脚本：
+    python scripts/make_icon.py     # 渲染 brand/icon.png + brand/icon-sizes/
+    python scripts/make-icon.py     # 装箱到 build/
 
 用法
 ----
@@ -68,9 +71,9 @@ def read_png(path):
 
 
 def render_png(size):
-    """用 brand/make_icon.py 现场渲染某个尺寸（仅 icns 的 1024 需要）。"""
-    if BRAND_DIR not in sys.path:
-        sys.path.insert(0, BRAND_DIR)
+    """用同目录的 make_icon.py 现场渲染某个尺寸（仅 icns 的 1024 需要）。"""
+    if HERE not in sys.path:
+        sys.path.insert(0, HERE)
     import make_icon  # 仓库内模块，仅此处按需导入
 
     indices, width, height, palette, _white = make_icon.render_icon(size)
