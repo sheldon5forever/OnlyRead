@@ -1,0 +1,350 @@
+/* ==========================================================================
+   文档正文排版（Markdown / Word / PowerPoint 共用）
+   ========================================================================== */
+
+.doc-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  user-select: text;
+}
+
+.doc {
+  margin: 0 auto;
+  padding: 40px 48px 120px;
+  font-size: 15.5px;
+  line-height: 1.78;
+  color: var(--fg);
+  word-wrap: break-word;
+}
+
+/* 排版宽度三档，由工具条上的「排版宽度」按钮切换 */
+.doc--comfortable {
+  max-width: 900px;
+}
+
+.doc--wide {
+  max-width: 1280px;
+}
+
+.doc--full {
+  max-width: none;
+}
+
+/* ------------------------------- 标题 ---------------------------------- */
+
+.doc h1,
+.doc h2,
+.doc h3,
+.doc h4,
+.doc h5,
+.doc h6 {
+  margin: 1.6em 0 0.7em;
+  font-weight: 640;
+  line-height: 1.35;
+  scroll-margin-top: 20px;
+}
+
+.doc h1 {
+  margin-top: 0.4em;
+  font-size: 1.85em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.doc h2 {
+  font-size: 1.42em;
+  padding-bottom: 0.32em;
+  border-bottom: 1px solid var(--md-hr);
+}
+
+.doc h3 {
+  font-size: 1.2em;
+}
+
+.doc h4 {
+  font-size: 1.05em;
+}
+
+.doc h5,
+.doc h6 {
+  font-size: 0.96em;
+  color: var(--fg-muted);
+}
+
+/* ------------------------------- 段落 ---------------------------------- */
+
+.doc p {
+  margin: 0 0 1em;
+}
+
+.doc a {
+  color: var(--md-link);
+  text-decoration: none;
+}
+
+.doc a:hover {
+  text-decoration: underline;
+}
+
+.doc strong {
+  font-weight: 640;
+}
+
+.doc hr {
+  height: 1px;
+  margin: 2em 0;
+  border: none;
+  background: var(--md-hr);
+}
+
+/* ------------------------------- 列表 ---------------------------------- */
+
+.doc ul,
+.doc ol {
+  margin: 0 0 1em;
+  padding-left: 1.9em;
+}
+
+.doc li {
+  margin: 0.28em 0;
+}
+
+.doc li > ul,
+.doc li > ol {
+  margin: 0.28em 0;
+}
+
+.doc li::marker {
+  color: var(--fg-muted);
+}
+
+.doc input[type='checkbox'] {
+  margin-right: 0.5em;
+}
+
+.doc li.task-list-item {
+  list-style: none;
+  margin-left: -1.4em;
+}
+
+/* ------------------------------- 引用 ---------------------------------- */
+
+.doc blockquote {
+  margin: 0 0 1em;
+  padding: 0.2em 0 0.2em 1em;
+  border-left: 3px solid var(--md-quote-border);
+  color: var(--fg-muted);
+}
+
+.doc blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+/* ------------------------------- 代码 ---------------------------------- */
+
+.doc code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+.doc :not(pre) > code {
+  padding: 0.16em 0.38em;
+  border-radius: var(--radius-sm);
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+}
+
+.doc pre {
+  margin: 0 0 1.1em;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  overflow: auto;
+  line-height: 1.62;
+}
+
+.doc pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* ------------------------------- 表格 ---------------------------------- */
+
+.doc table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 0 1.2em;
+  overflow: auto;
+  border-collapse: collapse;
+  font-size: 0.94em;
+}
+
+.doc th,
+.doc td {
+  padding: 8px 13px;
+  border: 1px solid var(--border-strong);
+  text-align: left;
+  vertical-align: top;
+}
+
+.doc th {
+  background: var(--md-table-head);
+  font-weight: 620;
+  white-space: nowrap;
+}
+
+.doc tbody tr:nth-child(even) {
+  background: var(--bg-inset);
+}
+
+/* ------------------------------- 图片 ---------------------------------- */
+
+.doc img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+/* 本地图片读取期间的占位 */
+.local-image--pending {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-code);
+  border: 1px dashed var(--border-strong);
+  color: var(--fg-subtle);
+  font-size: 12.5px;
+}
+
+/* ---------------------------- 其它元素 --------------------------------- */
+
+.doc kbd {
+  display: inline-block;
+  padding: 1px 6px;
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-inset);
+}
+
+.doc del {
+  color: var(--fg-subtle);
+}
+
+/* ==========================================================================
+   代码高亮（highlight.js 类名，明暗主题各一套配色）
+   ========================================================================== */
+
+.hljs-comment,
+.hljs-quote {
+  color: var(--fg-subtle);
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-section,
+.hljs-doctag,
+.hljs-name,
+.hljs-strong {
+  font-weight: 600;
+}
+
+:root[data-theme='light'] .hljs-keyword,
+:root[data-theme='light'] .hljs-selector-tag,
+:root[data-theme='light'] .hljs-literal,
+:root[data-theme='light'] .hljs-section {
+  color: #cf222e;
+}
+
+:root[data-theme='light'] .hljs-string,
+:root[data-theme='light'] .hljs-regexp,
+:root[data-theme='light'] .hljs-addition,
+:root[data-theme='light'] .hljs-attribute,
+:root[data-theme='light'] .hljs-meta .hljs-string {
+  color: #0a3069;
+}
+
+:root[data-theme='light'] .hljs-number,
+:root[data-theme='light'] .hljs-variable,
+:root[data-theme='light'] .hljs-template-variable,
+:root[data-theme='light'] .hljs-type,
+:root[data-theme='light'] .hljs-selector-attr,
+:root[data-theme='light'] .hljs-selector-pseudo {
+  color: #0550ae;
+}
+
+:root[data-theme='light'] .hljs-title,
+:root[data-theme='light'] .hljs-title.function_,
+:root[data-theme='light'] .hljs-title.class_,
+:root[data-theme='light'] .hljs-built_in {
+  color: #8250df;
+}
+
+:root[data-theme='light'] .hljs-attr,
+:root[data-theme='light'] .hljs-property,
+:root[data-theme='light'] .hljs-selector-class,
+:root[data-theme='light'] .hljs-selector-id {
+  color: #953800;
+}
+
+:root[data-theme='light'] .hljs-symbol,
+:root[data-theme='light'] .hljs-bullet,
+:root[data-theme='light'] .hljs-link {
+  color: #0a3069;
+}
+
+:root[data-theme='light'] .hljs-deletion {
+  color: #82071e;
+  background: #ffebe9;
+}
+
+:root[data-theme='dark'] .hljs-keyword,
+:root[data-theme='dark'] .hljs-selector-tag,
+:root[data-theme='dark'] .hljs-literal,
+:root[data-theme='dark'] .hljs-section {
+  color: #ff7b72;
+}
+
+:root[data-theme='dark'] .hljs-string,
+:root[data-theme='dark'] .hljs-regexp,
+:root[data-theme='dark'] .hljs-addition,
+:root[data-theme='dark'] .hljs-attribute,
+:root[data-theme='dark'] .hljs-meta .hljs-string {
+  color: #a5d6ff;
+}
+
+:root[data-theme='dark'] .hljs-number,
+:root[data-theme='dark'] .hljs-variable,
+:root[data-theme='dark'] .hljs-template-variable,
+:root[data-theme='dark'] .hljs-type,
+:root[data-theme='dark'] .hljs-selector-attr,
+:root[data-theme='dark'] .hljs-selector-pseudo {
+  color: #79c0ff;
+}
+
+:root[data-theme='dark'] .hljs-title,
+:root[data-theme='dark'] .hljs-title.function_,
+:root[data-theme='dark'] .hljs-title.class_,
+:root[data-theme='dark'] .hljs-built_in {
+  color: #d2a8ff;
+}
+
+:root[data-theme='dark'] .hljs-attr,
+:root[data-theme='dark'] .hljs-property,
+:root[data-theme='dark'] .hljs-selector-class,
+:root[data-theme='dark'] .hljs-selector-id {
+  color: #ffa657;
+}
+
+:root[data-theme='dark'] .hljs-deletion {
+  color: #ffdcd7;
+  background: #67060c;
+}

@@ -1,0 +1,53 @@
+appId: com.onlyread.app
+productName: OnlyRead
+directories:
+  buildResources: build
+  output: release
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+asarUnpack:
+  - resources/**
+# 运行时窗口 / 任务栏图标（src/main/index.ts 用 process.resourcesPath 读取）。
+# Windows/macOS 的打包图标来自 build/icon.ico / icon.icns，这一份是给 Linux 等
+# 依赖窗口 WM_ICON 的场景兜底，保证开发模式与打包后看到同一个图标。
+extraResources:
+  - from: build/icon.png
+    to: icon.png
+win:
+  executableName: OnlyRead
+  target:
+    - target: nsis
+      arch:
+        - x64
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  category: public.app-category.productivity
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    NSDocumentsFolderUsageDescription: 需要访问"文稿"目录以打开文件。
+    NSDownloadsFolderUsageDescription: 需要访问"下载"目录以打开文件。
+dmg:
+  artifactName: ${name}-${version}.${ext}
+linux:
+  target:
+    - AppImage
+    - deb
+  maintainer: onlyread
+  category: Office
+appImage:
+  artifactName: ${name}-${version}.${ext}
+npmRebuild: false

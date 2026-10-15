@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" role="img" aria-label="OnlyRead">
+  <!--
+    OnlyRead favicon · 描边空心双栏书，与应用图标同源。
+    坐标由 brand/make-favicon.py 调用 make_icon.make_book_geometry() 生成，
+    与 icon-16.png 走的是同一份几何 —— 请勿手改坐标。
+
+    16 视口（= favicon 最小显示尺寸，1 单位 = 1 像素）：
+      圆角 rx = 3.52
+      页框    4.3216 x 9.92，y 3.04 ~ 12.96
+      左页    x 2.08 ~ 6.4016
+      右页    x 9.5984 ~ 13.92    中缝 = 3.1968
+      描边    2.0128（书宽的比例 17.00%）
+  -->
+  <defs>
+    <linearGradient id="mrg" x1="0" y1="0" x2="16" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2f7efc"/>
+      <stop offset="1" stop-color="#1e4fd8"/>
+    </linearGradient>
+  </defs>
+  <rect width="16" height="16" rx="3.52" fill="url(#mrg)"/>
+  <g fill="none" stroke="#fff" stroke-width="2.0128">
+    <rect x="2.08" y="3.04" width="4.3216" height="9.92"/>
+    <rect x="9.5984" y="3.04" width="4.3216" height="9.92"/>
+  </g>
+</svg>

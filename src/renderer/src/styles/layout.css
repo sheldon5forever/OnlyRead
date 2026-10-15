@@ -1,0 +1,381 @@
+/* ==========================================================================
+   整体布局：标题栏 + 左右分栏
+   ========================================================================== */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-app);
+}
+
+/* ------------------------------- 标题栏 -------------------------------- */
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: var(--titlebar-height);
+  flex: 0 0 var(--titlebar-height);
+  padding-left: 10px;
+  background: var(--titlebar-bg);
+  color: var(--titlebar-fg);
+  -webkit-app-region: drag;
+}
+
+.titlebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  padding-right: 4px;
+  color: var(--titlebar-fg);
+}
+
+.titlebar__brand-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.titlebar__path {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 12.5px;
+  color: var(--titlebar-fg-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: rtl;
+  text-align: left;
+  padding-right: 8px;
+}
+
+.titlebar__path > span {
+  direction: ltr;
+  unicode-bidi: plaintext;
+}
+
+.titlebar__path em {
+  font-style: normal;
+  color: var(--titlebar-fg);
+}
+
+.titlebar__actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+  -webkit-app-region: no-drag;
+  padding-right: 6px;
+}
+
+/* ---------------------------- 阅读设置弹层 ------------------------------ */
+
+.settings-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 60;
+  min-width: 190px;
+  padding: 6px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-pop);
+  color: var(--fg);
+}
+
+.settings-menu__group-label {
+  padding: 6px 8px 4px;
+  font-size: 11px;
+  color: var(--fg-subtle);
+}
+
+.settings-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 7px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--fg);
+  text-align: left;
+  transition: background var(--transition);
+}
+
+.settings-menu__item:hover {
+  background: var(--bg-hover);
+}
+
+.settings-menu__divider {
+  height: 1px;
+  margin: 6px 4px;
+  background: var(--border);
+}
+
+.titlebar__button {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-md);
+  color: var(--titlebar-fg-dim);
+  transition: background var(--transition), color var(--transition);
+}
+
+.titlebar__button:hover {
+  background: var(--titlebar-hover);
+  color: var(--titlebar-fg);
+}
+
+.titlebar__button.is-active {
+  color: #ffd479;
+}
+
+.titlebar__divider {
+  width: 1px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.14);
+  margin: 0 5px;
+}
+
+/* 窗口控制按钮（三平台统一的自绘样式） */
+.wincontrols {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  -webkit-app-region: no-drag;
+}
+
+.wincontrols__button {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 100%;
+  color: var(--titlebar-fg-dim);
+  transition: background var(--transition), color var(--transition);
+}
+
+.wincontrols__button:hover {
+  background: var(--titlebar-hover);
+  color: var(--titlebar-fg);
+}
+
+.wincontrols__button--close:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+/* ------------------------------- 分栏 ---------------------------------- */
+
+.workspace {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+.workspace__sidebar {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+}
+
+.workspace__resizer {
+  flex: 0 0 5px;
+  margin-left: -3px;
+  cursor: col-resize;
+  background: transparent;
+  position: relative;
+  z-index: 5;
+}
+
+.workspace__resizer::after {
+  content: '';
+  position: absolute;
+  inset: 0 2px;
+  background: transparent;
+  transition: background var(--transition);
+}
+
+.workspace__resizer:hover::after,
+.workspace__resizer.is-dragging::after {
+  background: var(--accent);
+}
+
+.workspace__main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-app);
+}
+
+/* 拖拽打开文件时的遮罩 */
+.dropzone {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: rgba(47, 126, 252, 0.1);
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+}
+
+.dropzone__card {
+  padding: 22px 34px;
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--accent);
+  background: var(--bg-elevated);
+  color: var(--fg);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: var(--shadow-pop);
+}
+
+/* ------------------------------- 状态条 -------------------------------- */
+
+.statusbar {
+  flex: 0 0 26px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 12px;
+  font-size: 11.5px;
+  color: var(--fg-subtle);
+  background: var(--bg-sidebar);
+  border-top: 1px solid var(--border);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.statusbar__spacer {
+  flex: 1 1 auto;
+}
+
+.statusbar__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ------------------------------- 欢迎页 -------------------------------- */
+
+.welcome {
+  flex: 1 1 auto;
+  display: grid;
+  place-items: center;
+  padding: 40px;
+  overflow: auto;
+}
+
+.welcome__inner {
+  max-width: 620px;
+  text-align: center;
+}
+
+.welcome__logo {
+  display: inline-grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  margin-bottom: 18px;
+  border-radius: 18px;
+  background: linear-gradient(140deg, #3f8bff, #2f5dfc);
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(47, 93, 252, 0.28);
+}
+
+.welcome__title {
+  margin: 0 0 8px;
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+
+.welcome__subtitle {
+  margin: 0 0 26px;
+  font-size: 13.5px;
+  color: var(--fg-muted);
+  line-height: 1.7;
+}
+
+.welcome__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 34px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  color: var(--fg);
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: background var(--transition), border-color var(--transition),
+    transform var(--transition);
+}
+
+.button:hover {
+  background: var(--bg-hover);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.button--primary:hover {
+  background: #4a8ffd;
+}
+
+.welcome__formats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.welcome__chip {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.welcome__hint {
+  margin-top: 26px;
+  font-size: 12px;
+  color: var(--fg-subtle);
+}
+
+.welcome__recent-label {
+  margin-bottom: 8px;
+  font-size: 11.5px;
+  color: var(--fg-subtle);
+}

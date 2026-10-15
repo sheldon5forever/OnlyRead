@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>OnlyRead</title>
+    <!--
+      favicon：与 brand/favicon.svg、应用图标同源（双栏书），逐坐标一致。
+      内联 data-URI 而不是外链文件：打包后页面跑在 file:// 下，用绝对路径会 404；
+      且它不需要额外请求，与打包时注入的 CSP（img-src 含 data:）不冲突。
+      改动请回到 brand/favicon.svg 重新生成，勿手改下面的坐标。
+    -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2016%2016%22%20width=%2216%22%20height=%2216%22%20role=%22img%22%20aria-label=%22OnlyRead%22%3E%3Cdefs%3E%3ClinearGradient%20id=%22mrg%22%20x1=%220%22%20y1=%220%22%20x2=%2216%22%20y2=%2216%22%20gradientUnits=%22userSpaceOnUse%22%3E%3Cstop%20offset=%220%22%20stop-color=%22%232f7efc%22/%3E%3Cstop%20offset=%221%22%20stop-color=%22%231e4fd8%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width=%2216%22%20height=%2216%22%20rx=%223.52%22%20fill=%22url(%23mrg)%22/%3E%3Cg%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%222.0128%22%3E%3Crect%20x=%222.08%22%20y=%223.04%22%20width=%224.3216%22%20height=%229.92%22/%3E%3Crect%20x=%229.5984%22%20y=%223.04%22%20width=%224.3216%22%20height=%229.92%22/%3E%3C/g%3E%3C/svg%3E"
+    />
+    <!-- Content-Security-Policy 由 electron.vite.config.ts 在打包时注入，开发模式不限制 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
